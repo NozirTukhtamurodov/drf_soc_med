@@ -1,7 +1,7 @@
-
 from dataclasses import dataclass
 from typing import Optional
 from core.models import User
+
 
 @dataclass
 class UserDomain:
@@ -22,4 +22,3 @@ class UserDomain:
         user_obj.username = self.name
         user_obj.avatar = self.avatar_url
         return user_obj
-    

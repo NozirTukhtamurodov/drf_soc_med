@@ -1,5 +1,3 @@
-# user/repositories.py
-
 from core.models import User
 
 class UserRepository:

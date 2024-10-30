@@ -2,6 +2,7 @@ from rest_framework import serializers
 from user.serializers import UserSerializer
 from post.domains import PostDomain
 
+
 class PostSerializer(serializers.Serializer):
     content_url = serializers.URLField()
 

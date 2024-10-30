@@ -3,6 +3,7 @@ from datetime import datetime
 from user.domains import UserDomain
 from post.domains import PostDomain
 
+
 @dataclass
 class NotificationDomain:
     id: int

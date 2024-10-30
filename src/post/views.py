@@ -19,7 +19,6 @@ class CreatePostView(PostBaseView):
         responses={201: PostSerializer}
     )
     def post(self, request):
-        # Delegating the entire process (including validation) to the service
         service_response = self.service.create_post(data=request.data, user=request.user)
         return service_response.to_response()
 

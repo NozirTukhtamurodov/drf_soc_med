@@ -1,8 +1,7 @@
-# post/domains.py
-
 from dataclasses import dataclass
 from user.domains import UserDomain
 from core.models import Post
+
 
 @dataclass
 class PostDomain:

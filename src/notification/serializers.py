@@ -3,6 +3,7 @@ from notification.domains import NotificationDomain
 from user.serializers import UserSerializer
 from post.serializers import PostSerializer
 
+
 class NotificationSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     user = UserSerializer()

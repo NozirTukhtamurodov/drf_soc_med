@@ -18,23 +18,27 @@ class IPostService(ABC):
         pass
 
     @abstractmethod
-    def create_post(self, data: dict, user: User):
+    def create_post(self, data: dict, user: User) -> ServiceResponse:
         pass
 
     @abstractmethod
-    def get_user_posts(self, user: User):
+    def get_user_posts(self, user: User) -> ServiceResponse:
         pass
 
     @abstractmethod
-    def like_post(self, post_id: int, user: User):
+    def like_post(self, post_id: int, user: User) -> ServiceResponse:
         pass
 
     @abstractmethod
-    def update_post(self, post_id: int, data: dict, user: User):
+    def update_post(self, post_id: int, data: dict, user: User) -> ServiceResponse:
         pass
 
     @abstractmethod
-    def delete_post(self, post_id: int, user: User):
+    def delete_post(self, post_id: int, user: User) -> ServiceResponse:
+        pass
+
+    @abstractmethod
+    def get_liked_posts(self, user: User) -> ServiceResponse:
         pass
 
 
@@ -56,7 +60,7 @@ class PostService(IPostService):
         for observer in self.observers:
             observer.create_notification(post=post, liked_by_user=user)
 
-    def create_post(self, data: dict, user: User):
+    def create_post(self, data: dict, user: User) -> ServiceResponse:
         """
         Validate data using serializer
         """
@@ -72,17 +76,17 @@ class PostService(IPostService):
         serialized_post = self.serializer_class(saved_post).data
         return ServiceResponse(data=serialized_post, status=status.HTTP_201_CREATED)
 
-    def get_user_posts(self, user: User):
+    def get_user_posts(self, user: User) -> ServiceResponse:
         posts = self.repository.get_posts_by_user(user.id)
         serialized_posts = self.serializer_class(posts, many=True).data
         return ServiceResponse(data=serialized_posts, status=status.HTTP_200_OK)
 
-    def get_liked_posts(self, user: User):
+    def get_liked_posts(self, user: User) -> ServiceResponse:
         posts = self.repository.get_liked_posts_by_user(user)
         serialized_posts = self.serializer_class(posts, many=True).data
         return ServiceResponse(data=serialized_posts, status=status.HTTP_200_OK)
 
-    def like_post(self, post_id: int, user: User):
+    def like_post(self, post_id: int, user: User) -> ServiceResponse:
         post = self.repository.get_post_by_id(post_id)
         if not post:
             return ServiceResponse(message=f"Post with id {post_id} does not exist.", status=status.HTTP_404_NOT_FOUND)
@@ -99,7 +103,7 @@ class PostService(IPostService):
 
         return ServiceResponse(data={'post_id': post_id, 'status': 'liked'}, status=status.HTTP_200_OK)
 
-    def update_post(self, post_id: int, data: dict, user: User):
+    def update_post(self, post_id: int, data: dict, user: User) -> ServiceResponse:
         # Validate data
         serializer = self.serializer_class(data=data, partial=True)
         if not serializer.is_valid():
@@ -120,7 +124,7 @@ class PostService(IPostService):
         serialized_post = self.serializer_class(post).data
         return ServiceResponse(data=serialized_post, status=status.HTTP_200_OK)
 
-    def delete_post(self, post_id: int, user: User):
+    def delete_post(self, post_id: int, user: User) -> ServiceResponse:
         post = self.repository.get_post_by_id(post_id)
         if not post:
             return ServiceResponse(message=f"Post with id {post_id} does not exist.", status=status.HTTP_404_NOT_FOUND)
