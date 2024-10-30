@@ -72,7 +72,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Fetch the authenticated user’s profile:
 
    ```bash
-   curl -X GET http://127.0.0.1:8000/api/users/    -H "Authorization: Bearer <token>"    -H "accept: application/json"
+   curl -X GET http://127.0.0.1:8000/api/users/    -H "X-CSRFTOKEN:  <token>"    -H "accept: application/json"
    ```
 
 2. **Update User Profile (`PATCH /api/users/`)**
@@ -80,7 +80,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Update the authenticated user’s profile (e.g., username or avatar):
 
    ```bash
-   curl -X PATCH http://127.0.0.1:8000/api/users/    -H "Authorization: Bearer <token>"    -H "Content-Type: application/json"    -d '{
+   curl -X PATCH http://127.0.0.1:8000/api/users/    -H "X-CSRFTOKEN:  <token>"    -H "Content-Type: application/json"    -d '{
      "username": "john_doe",
      "avatar": "http://example.com/new_avatar.jpg"
    }'
@@ -95,7 +95,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Create a new post by providing a URL for the content (image or video):
 
    ```bash
-   curl -X POST http://127.0.0.1:8000/api/posts/    -H "Authorization: Bearer <token>"    -H "Content-Type: application/json"    -d '{
+   curl -X POST http://127.0.0.1:8000/api/posts/    -H "X-CSRFTOKEN:  <token>"    -H "Content-Type: application/json"    -d '{
      "content_url": "http://example.com/photo.jpg"
    }'
    ```
@@ -105,7 +105,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Fetch all posts created by the authenticated user:
 
    ```bash
-   curl -X GET http://127.0.0.1:8000/api/posts/mine/    -H "Authorization: Bearer <token>"    -H "accept: application/json"
+   curl -X GET http://127.0.0.1:8000/api/posts/mine/    -H "X-CSRFTOKEN:  <token>"    -H "accept: application/json"
    ```
 
 3. **Get Liked Posts (`GET /api/posts/liked/`)**
@@ -113,7 +113,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Fetch all posts liked by the authenticated user:
 
    ```bash
-   curl -X GET http://127.0.0.1:8000/api/posts/liked/    -H "Authorization: Bearer <token>"    -H "accept: application/json"
+   curl -X GET http://127.0.0.1:8000/api/posts/liked/    -H "X-CSRFTOKEN: <token>"    -H "accept: application/json"
    ```
 
 4. **Like a Post (`POST /api/posts/<post_id>/like/`)**
@@ -121,7 +121,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Like a specific post by providing the post ID:
 
    ```bash
-   curl -X POST http://127.0.0.1:8000/api/posts/1/like/    -H "Authorization: Bearer <token>"    -H "accept: application/json"
+   curl -X POST http://127.0.0.1:8000/api/posts/1/like/    -H "X-CSRFTOKEN:  <token>"    -H "accept: application/json"
    ```
 
 5. **Update a Post (`PATCH /api/posts/<post_id>/`)**
@@ -129,7 +129,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Update an existing post by providing the post ID and new content:
 
    ```bash
-   curl -X PATCH http://127.0.0.1:8000/api/posts/1/    -H "Authorization: Bearer <token>"    -H "Content-Type: application/json"    -d '{
+   curl -X PATCH http://127.0.0.1:8000/api/posts/1/    -H "X-CSRFTOKEN:  <token>"    -H "Content-Type: application/json"    -d '{
      "content_url": "http://example.com/updated_photo.jpg"
    }'
    ```
@@ -139,7 +139,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Delete a specific post by providing the post ID:
 
    ```bash
-   curl -X DELETE http://127.0.0.1:8000/api/posts/1/delete/    -H "Authorization: Bearer <token>"    -H "accept: application/json"
+   curl -X DELETE http://127.0.0.1:8000/api/posts/1/delete/    -H "X-CSRFTOKEN:  <token>"    -H "accept: application/json"
    ```
 
 ---
@@ -151,7 +151,7 @@ Below are the API endpoints available in the system, along with example `curl` c
    Fetch notifications related to the authenticated user’s posts (e.g., when someone likes a post):
 
    ```bash
-   curl -X GET http://127.0.0.1:8000/api/notifications/    -H "Authorization: Bearer <token>"    -H "accept: application/json"
+   curl -X GET http://127.0.0.1:8000/api/notifications/    -H "X-CSRFTOKEN:  <token>"    -H "accept: application/json"
    ```
 
 ---
@@ -166,6 +166,6 @@ You can explore and test the API via the interactive Swagger UI, which is availa
 
 ## Additional Notes
 
-- **Authentication**: Replace `<token>` in the `curl` commands with your actual JWT token if you are using token-based authentication. If you are using session-based authentication, you will need to modify the commands accordingly (e.g., use session cookies).
+- **Authentication**: Replace `<token>` in the `curl` commands with your actual CSRF token, session-based authentication. If you are using session-based authentication, you will need to modify the commands accordingly (e.g., use session cookies).
 - **Superuser**: You can access the Django admin panel using the superuser account you created by visiting `http://127.0.0.1:8000/admin/`.
 - **Database**: The system uses PostgreSQL for data storage. Ensure that the PostgreSQL service is running before starting the application.
