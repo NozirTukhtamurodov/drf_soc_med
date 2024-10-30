@@ -1,5 +1,5 @@
 from notification.repositories import INotificationRepository, NotificationRepository
-from core.models import User
+from core.models import User, NotificationType
 from notification.domains import NotificationDomain
 from rest_framework import status
 from core.response import ServiceResponse
@@ -36,7 +36,7 @@ class NotificationService(INotificationService):
             id=None,
             user=post.author,
             post=post,
-            type="like",
+            type=NotificationType.like.value,
             created_at=datetime.now()  # Corrected to use datetime object
         )
         saved_notification = self.repository.save_notification(notification_domain)

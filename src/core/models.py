@@ -2,6 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+class NotificationType(models.TextChoices):
+    like = "like", "Like"
+    dislike = "dislike", "Dislike"
+
+
 class User(AbstractUser):
     avatar = models.URLField(null=True, blank=True)
     liked_posts = models.ManyToManyField('Post', related_name='liked_by', blank=True)
@@ -32,5 +37,5 @@ class Post(models.Model):
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="notifications")
-    notification_type = models.CharField(max_length=50)  # e.g., 'like'
+    notification_type = models.CharField(max_length=50, choices=NotificationType.choices)
     created_at = models.DateTimeField(auto_now_add=True)
