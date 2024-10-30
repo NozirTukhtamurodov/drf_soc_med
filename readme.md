@@ -48,6 +48,7 @@ Follow these steps to set up and run the project using Docker Compose:
    ```bash
    python3 manage.py makemigrations
    python3 manage.py migrate
+   python3 manage.py collectstatic
    ```
 
 5. **Create a superuser for accessing the admin panel**:
